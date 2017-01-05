@@ -8,14 +8,19 @@ calculator program yourself in this file.
 from arithmetic2 import *
 
 
-def validate(lst, pos):
+def validate(lst, length):
 
-    try:
-        num = int(lst[pos])
-    except (IndexError, ValueError):
-        print "I don't understand"
-        num = None
-    return num
+    if length == 0:
+        length = len(lst) + 1
+    num_list = []
+    for x in range(1, length + 1):
+        try:
+            num = int(lst[x])
+        except (IndexError, ValueError):
+            print "I don't understand"
+            return []
+        num_list.append(num)
+    return num_list
 
 while True:
 
@@ -24,31 +29,39 @@ while True:
     if equation[0] == "q":
         break
 
-    first = validate(equation, 1)
-    if not first:
-        continue
+    one = ["square", "cube"]
+    two = ["-", "/", "pow", "mod"]
+    more = ["+", "*"]
+    if equation[0] in one:
+        num_list = validate(equation, 1)
+        if num_list == []:
+            break
+        elif equation[0] == "square":
+            print square(num_list[0])
+        elif equation[0] == "cube":
+            print cube(num_list[0])
 
-    if equation[0] == "square":
-        print square(first)
-    elif equation[0] == "cube":
-        print cube(first)
-    else:
-
-        second = validate(equation, 2)
-        if not second:
-            continue
-
-        if equation[0] == "+":
-            print add(first, second)
+    elif equation[0] in two:
+        num_list = validate(equation, 2)
+        if num_list == []:
+            break
         elif equation[0] == "-":
-            print subtract(first, second)
-        elif equation[0] == "*":
-            print multiply(first, second)
+            print subtract(num_list[0], num_list[1])
         elif equation[0] == "/":
-            print divide(first, second)
+            print divide(num_list[0], num_list[1])
         elif equation[0] == "pow":
-            print power(first, second)
+            print power(num_list[0], num_list[1])
         elif equation[0] == "mod":
-            print mod(first, second)
+            print mod(num_list[0], num_list[1])
+
+    elif equation[0] in more:
+        num_list = validate(equation, 0)
+        if num_list == []:
+            break
+        elif equation[0] == "+":
+            print reduce(add, num_list)
         else:
-            print "I don't understand"
+            print reduce(multiply, num_list)
+
+    else:
+        print "I don't understand"
