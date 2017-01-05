@@ -5,7 +5,7 @@ Using our arithmetic.py file from Exercise02, create the
 calculator program yourself in this file.
 """
 
-from arithmetic import *
+from arithmetic2 import *
 
 
 def validate(lst, pos):
@@ -33,6 +33,7 @@ while True:
     elif equation[0] == "cube":
         print cube(first)
     else:
+
         second = validate(equation, 2)
         if not second:
             continue
