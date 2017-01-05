@@ -7,6 +7,16 @@ calculator program yourself in this file.
 
 from arithmetic import *
 
+
+def validate(lst, pos):
+
+    try:
+        num = int(lst[pos])
+    except (IndexError, ValueError):
+        print "I don't understand"
+        num = None
+    return num
+
 while True:
 
     equation = raw_input("> ").split()
@@ -14,10 +24,8 @@ while True:
     if equation[0] == "q":
         break
 
-    try:
-        first = int(equation[1])
-    except (IndexError, ValueError):
-        print "I don't understand"
+    first = validate(equation, 1)
+    if not first:
         continue
 
     if equation[0] == "square":
@@ -25,10 +33,8 @@ while True:
     elif equation[0] == "cube":
         print cube(first)
     else:
-        try:
-            second = int(equation[2])
-        except (IndexError, ValueError):
-            print "I don't understand"
+        second = validate(equation, 2)
+        if not second:
             continue
 
         if equation[0] == "+":
